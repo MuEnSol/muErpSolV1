@@ -1,6 +1,6 @@
 <?php
 
-/**
+/**this is updated -- 12-05-2013
  * This is the model class for table "{{jobexperiance}}".
  *
  * The followings are the available columns in table '{{jobexperiance}}':
