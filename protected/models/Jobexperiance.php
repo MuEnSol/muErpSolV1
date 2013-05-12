@@ -16,7 +16,7 @@
  * The followings are the available model relations:
  * @property Person $person
  */
-class Jobexperiance extends CActiveRecord
+class JobExperiance extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -44,18 +44,19 @@ class Jobexperiance extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('jobExperianceID, personID', 'numerical', 'integerOnly'=>true),
+			array('jobExperianceID, personID, joe_contact', 'numerical', 'integerOnly'=>true),
 			array('joe_employer', 'length', 'max'=>200),
 			array('joe_address', 'length', 'max'=>300),
 			array('joe_position', 'length', 'max'=>50),
 			array('joe_contact', 'length', 'max'=>15),
-			array('joe_startDate, joe_endDate', 'safe'),
+                    
+			array('joe_startDate, joe_endDate', 'date'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('jobExperianceID, joe_employer, joe_address, joe_position, joe_startDate, joe_endDate, joe_contact, personID', 'safe', 'on'=>'search'),
+			array('jobExperianceID, joe_employer, joe_position, joe_startDate, personID', 'safe', 'on'=>'search'),
 		);
 	}
-
+/**/
 	/**
 	 * @return array relational rules.
 	 */
@@ -74,14 +75,14 @@ class Jobexperiance extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'jobExperianceID' => 'Job Experiance',
-			'joe_employer' => 'Joe Employer',
-			'joe_address' => 'Joe Address',
-			'joe_position' => 'Joe Position',
-			'joe_startDate' => 'Joe Start Date',
-			'joe_endDate' => 'Joe End Date',
-			'joe_contact' => 'Joe Contact',
-			'personID' => 'Person',
+			'jobExperianceID' => 'JobExperianceID',
+			'joe_employer' => 'Employer',
+			'joe_address' => 'Address',
+			'joe_position' => 'Position',
+			'joe_startDate' => 'Start Date',
+			'joe_endDate' => 'End Date',
+			'joe_contact' => 'Contact',
+			'personID' => 'PersonID',
 		);
 	}
 
@@ -98,11 +99,11 @@ class Jobexperiance extends CActiveRecord
 
 		$criteria->compare('jobExperianceID',$this->jobExperianceID);
 		$criteria->compare('joe_employer',$this->joe_employer,true);
-		$criteria->compare('joe_address',$this->joe_address,true);
+		
 		$criteria->compare('joe_position',$this->joe_position,true);
 		$criteria->compare('joe_startDate',$this->joe_startDate,true);
-		$criteria->compare('joe_endDate',$this->joe_endDate,true);
-		$criteria->compare('joe_contact',$this->joe_contact,true);
+		
+		
 		$criteria->compare('personID',$this->personID);
 
 		return new CActiveDataProvider($this, array(

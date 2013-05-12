@@ -52,7 +52,7 @@ class Academichistory extends CActiveRecord
 			array('ach_remarks', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('academicHistoryID, ach_degree, ach_group, ach_institution, ach_board, ach_passingYear, ach_result, ach_remarks, personID', 'safe', 'on'=>'search'),
+			array('academicHistoryID, ach_degree, ach_group, ach_institution, ach_board, ach_passingYear, ach_result, personID', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,15 +74,15 @@ class Academichistory extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'academicHistoryID' => 'Academic History',
-			'ach_degree' => 'Ach Degree',
-			'ach_group' => 'Ach Group',
-			'ach_institution' => 'Ach Institution',
-			'ach_board' => 'Ach Board',
-			'ach_passingYear' => 'Ach Passing Year',
-			'ach_result' => 'Ach Result',
-			'ach_remarks' => 'Ach Remarks',
-			'personID' => 'Person',
+			'academicHistoryID' => 'AcademicHistoryID',
+			'ach_degree' => 'Degree',
+			'ach_group' => 'Group',
+			'ach_institution' => 'Institution',
+			'ach_board' => 'Board',
+			'ach_passingYear' => 'Passing Year',
+			'ach_result' => 'Result',
+			'ach_remarks' => 'Remarks',
+			'personID' => 'PersonID',
 		);
 	}
 
@@ -104,7 +104,7 @@ class Academichistory extends CActiveRecord
 		$criteria->compare('ach_board',$this->ach_board,true);
 		$criteria->compare('ach_passingYear',$this->ach_passingYear);
 		$criteria->compare('ach_result',$this->ach_result);
-		$criteria->compare('ach_remarks',$this->ach_remarks,true);
+		
 		$criteria->compare('personID',$this->personID);
 
 		return new CActiveDataProvider($this, array(
