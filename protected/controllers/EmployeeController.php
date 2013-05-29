@@ -62,44 +62,49 @@ class EmployeeController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Employee;
-                $persons = new Person;
-                $academicHistory = new Academichistory;
-                $jobExperiance = new Jobexperiance;
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		 if(!empty($_POST))
-		{
-                     
-                        $persons->attributes = $_POST['Person'];
-                        $model->attributes=$_POST['Employee'];
-                        $academicHistory->attributes=$_POST['Academichistory'];
-                        $jobExperiance->attributes = $_POST['Jobexperiance'];
-                        
-                        if($persons->validate() || $model->validate() || $academicHistory->validate() || $jobExperiance->validate())
-                        {
-                                                 	                        
-                            $persons->save(false);
-                            $model->employeeID = $persons->personID;
-                            $model->save(false);
-                            $academicHistory->personID = $persons->personID;
-                            $academicHistory->save(false);
-                            $jobExperiance->personID = $persons->personID;
-                            $jobExperiance->save(false);
-                            
-                                $this->redirect(array('view','id'=>$model->employeeID));
-                        }
-		}
-                $this->render('create',array(
-			'model'=>$model,
-                        'persons'=>$persons,                   
-                        'academicHistory'=>$academicHistory,
-                        'jobExperiance'=>$jobExperiance,
-		));
+            
+         	// $this->performAjaxValidation($model);
+                if (isset($_POST['step1']))
+			{
+                    
+			$this->setPageState('step1',$_POST['Person']); // save step1 into form state
+			$persons=new Person('step1');
+			$persons->attributes = $_POST['Person'];
+                        $model = new Employee('finish');
+                        $model->employeeID = $persons->personID;
+			//if($persons->validate())
+                         //   {
+                                $this->render('_form',array('model'=>$model));	
+                           // }
+			///else {
+                       				
+                           //     $this->render('_person',array('persons'=>$persons));
+                            //}
+			} 
+		elseif (isset($_POST['finish'])) 
+			{
+					$persons = new Person('finish');
+					$persons->attributes = $this->getPageState('step1',array()); //get the info from step 1
+					$model->attributes = $_POST['Employee']; // then the info from step2
+                                        $model->employeeID = $persons->personID;    
+                                        echo 'test';
+                                        if ($persons->save())
+                                        {
+                                            
+                                                $model->save();
+						$this->redirect(array('home'));
+                                        }
+			}
+		else
+                    {
+					
+			 // this is the default, first time (step1)
+				$persons=new Person('new');
+				$this->render('_person',array('persons'=>$persons));
+                                                                
+                       }
 		
 	}
-        
 
 	/**
 	 * Updates a particular model.
